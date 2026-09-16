@@ -9,7 +9,7 @@ Este proyecto expone un modelo de Random Forest que predice si un pasajero del T
 La API está desplegada en Render y disponible en:
 
 ```
-https://<vuestra-url-de-render>.onrender.com
+https://titanic-api-deploy.onrender.com
 ```
 
 > ⚠️ El servidor gratuito de Render se "duerme" tras 14 minutos sin actividad. Si lleva un rato sin usarse, la primera petición puede tardar 40-60 segundos en responder mientras se reactiva.
@@ -19,7 +19,7 @@ https://<vuestra-url-de-render>.onrender.com
 FastAPI genera documentación automática. Podéis probar todos los endpoints directamente desde el navegador en:
 
 ```
-https://<vuestra-url-de-render>.onrender.com/docs
+https://titanic-api-deploy.onrender.com/docs
 ```
 
 ## 🧩 Endpoints disponibles
