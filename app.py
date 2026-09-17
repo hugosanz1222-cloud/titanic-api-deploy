@@ -32,6 +32,7 @@ def home():
         "endpoints": {
             "/predict": "POST con JSON en el body --- devuelve la predicción",
             "/predict_get": "GET con query string ?Pclass=1&Sex=female&Age=29&Fare=100 --- devuelve la predicción",
+            "/predict_batch": "POST con una lista de pasajeros en el body --- devuelve una lista de predicciones",
             "/docs": "documentación interactiva",
         },
     }
@@ -53,17 +54,12 @@ def predict_get(pasajero: Pasajero = Depends()):
     return Prediccion(survived=prediccion, probabilidad_supervivencia=round(probabilidad, 3))
 
 
-# ---------------------------------------------------------------------------
-# ENDPOINT EXTRA — descomentar el bloque de abajo para la demo en directo.
-# Hace lo mismo que /predict pero para VARIOS pasajeros a la vez (una lista).
-# ---------------------------------------------------------------------------
-
-# @app.post("/predict_batch", response_model=List[Prediccion])
-# def predict_batch(pasajeros: List[Pasajero]):
-#     X = pd.DataFrame([p.model_dump() for p in pasajeros])
-#     predicciones = modelo.predict(X)
-#     probabilidades = modelo.predict_proba(X)[:, 1]
-#     return [
-#         Prediccion(survived=int(pred), probabilidad_supervivencia=round(float(prob), 3))
-#         for pred, prob in zip(predicciones, probabilidades)
-#     ]
+@app.post("/predict_batch", response_model=List[Prediccion])
+def predict_batch(pasajeros: List[Pasajero]):
+    X = pd.DataFrame([p.model_dump() for p in pasajeros])
+    predicciones = modelo.predict(X)
+    probabilidades = modelo.predict_proba(X)[:, 1]
+    return [
+        Prediccion(survived=int(pred), probabilidad_supervivencia=round(float(prob), 3))
+        for pred, prob in zip(predicciones, probabilidades)
+    ]
